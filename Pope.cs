@@ -18,7 +18,11 @@ namespace WpfApp3
             this.ID = ID;
             this.Name = Name;
             this.Description = Description;
-            this.ImagePath = ImagePath;
+
+            if(ImagePath == "" || ImagePath == null)
+                this.ImagePath = "/Pages/null.png";
+            else
+                this.ImagePath = ImagePath;
         }
     }
 }

@@ -25,7 +25,16 @@ namespace WpfApp3.Pages
             InitializeComponent();
             Title.Content = pope.Name;
             Description.Content = pope.Description;
-            ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.Relative));
+
+            try
+            {
+                ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.RelativeOrAbsolute));
+            }
+            catch (System.ArgumentNullException)
+            {
+                pope.ImagePath = "/Pages/null.png";
+                ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.RelativeOrAbsolute));
+            }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

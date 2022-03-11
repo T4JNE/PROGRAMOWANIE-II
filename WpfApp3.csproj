@@ -9,6 +9,13 @@
   <ItemGroup>
     <None Remove="Pages\bhub.jpg" />
     <None Remove="Pages\icon.png" />
+    <None Remove="Pages\null.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\null.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

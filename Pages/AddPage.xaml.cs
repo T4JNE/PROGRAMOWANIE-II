@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace WpfApp3
 {
@@ -20,9 +21,34 @@ namespace WpfApp3
     /// </summary>
     public partial class AddPage : Page
     {
+        private bool editMode = false;
+        private string imagePath;
+        private Pope pope;
+
         public AddPage()
         {
             InitializeComponent();
+            editMode = false;
+        }
+
+        public AddPage(Pope pope)
+        {
+            InitializeComponent();
+            Title.Text = pope.Name;
+            Description.Text = pope.Description;
+            try
+            {
+                ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.RelativeOrAbsolute));
+            }
+            catch (System.ArgumentNullException)
+            {
+                pope.ImagePath = "/Pages/null.png";
+                ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.RelativeOrAbsolute));
+            }
+            
+            ApplyButton.Content = "Edytuj";
+            editMode = true;
+            this.pope = pope;
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -30,9 +56,35 @@ namespace WpfApp3
             NavigationService.Content = new StartPage();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog file = new();
 
+            file.Filter = "Image Files(*.BMP;*.JPG; *.PNG; *.GIF)|*.BMP;*.JPG;*.PNG;*.GIF";
+            file.DefaultExt = ".png";
+
+            if (file.ShowDialog() == true)
+            {
+                imagePath = file.FileName;
+                ImageCtrl.Source = new BitmapImage(new Uri(imagePath));
+            }
+        }
+
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!editMode)
+            {
+                StartPage.test.Add(new Pope(StartPage.test.Count + 1, Title.Text, Description.Text, imagePath));
+            }
+            else
+            {
+                int i = StartPage.test.IndexOf(pope);
+                StartPage.test[i].ImagePath = imagePath;
+                StartPage.test[i].Name = Title.Text;
+                StartPage.test[i].Description = Description.Text;
+            }
+
+            NavigationService.Content = new StartPage();
         }
     }
 }

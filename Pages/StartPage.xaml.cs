@@ -22,13 +22,16 @@ namespace WpfApp3
     /// </summary>
     public partial class StartPage : Page
     {
-        private List<Pope> test = new();
+        public static List<Pope> test = new() { 
+            new Pope(1, "Fasolkowy Papież", "LOLOLO", "/Pages/icon.png"),
+            new Pope(2, "Papież Królik", "Papież królik zwany również papieżem wielkim \n\n\n Papież królik to królik papież. \n Dziękuję za uwagę.", "/Pages/bhub.jpg"), 
+            new Pope(3, "Niewidzialny Papież", "LOLOLO", "/Pages/null.png") };
+        
+
         public StartPage()
         {
             InitializeComponent();
-            test.Add(new Pope(1, "Fasolkowy Papież", "LOLOLO", "/Pages/icon.png"));
-            test.Add(new Pope(2, "Papież Królik", "LOLOLO", "/Pages/bhub.jpg"));
-            test.Add(new Pope(3, "Niewidzialny Papież", "LOLOLO"));
+            
             PopeList.ItemsSource = test;
         }
 
@@ -39,12 +42,20 @@ namespace WpfApp3
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Content = new DeletePage();
+            var pope = PopeList.SelectedItem as Pope;
+            if (pope == null)
+                return;
+
+            Trace.WriteLine(pope.Name);
         }
 
         private void Modify_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Content = new AddPage();
+            var pope = PopeList.SelectedItem as Pope;
+            if (pope == null)
+                return;
+
+            NavigationService.Content = new AddPage(pope);
         }
 
         private void Test(object sender, MouseButtonEventArgs e)
@@ -57,10 +68,10 @@ namespace WpfApp3
         void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var pope = ((FrameworkElement)e.OriginalSource).DataContext as Pope;
-            if (pope != null)
-            {
-                NavigationService.Content = new DisplayPage(pope);
-            }
+            if (pope == null)
+                return;
+
+            NavigationService.Content = new DisplayPage(pope);
         }
     }
 }
