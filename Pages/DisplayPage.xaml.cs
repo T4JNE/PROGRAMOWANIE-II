@@ -16,13 +16,16 @@ using System.Windows.Shapes;
 namespace WpfApp3.Pages
 {
     /// <summary>
-    /// Logika interakcji dla klasy DeletePage.xaml
+    /// Logika interakcji dla klasy DisplayPage.xaml
     /// </summary>
-    public partial class DeletePage : Page
+    public partial class DisplayPage : Page
     {
-        public DeletePage()
+        public DisplayPage(Pope pope)
         {
             InitializeComponent();
+            Title.Content = pope.Name;
+            Description.Content = pope.Description;
+            ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.Relative));
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

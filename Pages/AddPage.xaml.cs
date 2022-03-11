@@ -29,5 +29,10 @@ namespace WpfApp3
         {
             NavigationService.Content = new StartPage();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
