@@ -36,14 +36,16 @@ namespace WpfApp3
             InitializeComponent();
             Title.Text = pope.Name;
             Description.Text = pope.Description;
+            imagePath = pope.ImagePath;
             try
             {
-                ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.RelativeOrAbsolute));
+                ImageCtrl.Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
             }
             catch (System.ArgumentNullException)
             {
                 pope.ImagePath = "/Pages/null.png";
-                ImageCtrl.Source = new BitmapImage(new Uri(pope.ImagePath, UriKind.RelativeOrAbsolute));
+                imagePath = "/Pages/null.png";
+                ImageCtrl.Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
             }
             
             ApplyButton.Content = "Edytuj";
