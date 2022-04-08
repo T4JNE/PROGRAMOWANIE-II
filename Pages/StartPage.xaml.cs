@@ -32,7 +32,7 @@ namespace WpfApp3
         {
             InitializeComponent();
             
-            PopeList.ItemsSource = test;
+            PopeList.ItemsSource = SQLiteAccess.Read();
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -46,7 +46,9 @@ namespace WpfApp3
             if (pope == null)
                 return;
 
-            Trace.WriteLine(pope.Name);
+            //Trace.WriteLine(pope.Name);
+            if(SQLiteAccess.Delete(pope))
+                PopeList.ItemsSource = SQLiteAccess.Read();
         }
 
         private void Modify_Click(object sender, RoutedEventArgs e)
@@ -62,7 +64,7 @@ namespace WpfApp3
         {
             //test.Add(new Pope(3, "Niewidzialny Papież", "LOLOLO"));
             //Console.WriteLine("TEST");
-            Trace.WriteLine("text");
+            //Trace.WriteLine("text");
         }
 
         void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)

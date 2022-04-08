@@ -76,14 +76,16 @@ namespace WpfApp3
         {
             if (!editMode)
             {
-                StartPage.test.Add(new Pope(StartPage.test.Count + 1, Title.Text, Description.Text, imagePath));
+                //StartPage.test.Add(new Pope(StartPage.test.Count + 1, Title.Text, Description.Text, imagePath));
+                SQLiteAccess.Create(new Pope(StartPage.test.Count + 1, Title.Text, Description.Text, imagePath));
             }
             else
             {
-                int i = StartPage.test.IndexOf(pope);
-                StartPage.test[i].ImagePath = imagePath;
-                StartPage.test[i].Name = Title.Text;
-                StartPage.test[i].Description = Description.Text;
+                //int i = StartPage.test.IndexOf(pope);
+                //StartPage.test[i].ImagePath = imagePath;
+                //StartPage.test[i].Name = Title.Text;
+                //StartPage.test[i].Description = Description.Text;
+                SQLiteAccess.Update(new Pope(pope.ID, Title.Text, Description.Text, imagePath));
             }
 
             NavigationService.Content = new StartPage();
